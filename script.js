@@ -1,9 +1,9 @@
-import { callApi, getCityWeather } from "./apiServices.js";
+import { getCityWeather } from "./apiServices.js";
 
 const root = document.getElementById("root");
 const form = document.getElementById("search-bar");
 
-const url = `https://api.weatherapi.com/v1/current.json?key=b8a9505712a14179b93115900241507&q=London&aqi=no`;
+let cities = [];
 
 const createCardEl = (data) => {
   const cardEl = document.createElement("div");
@@ -16,6 +16,14 @@ const createCardEl = (data) => {
   </div>
 </div>
     `;
+  const a = {
+    city: data.location.name,
+    condition: data.current.condition.text,
+    temp: data.current.temp_c,
+  };
+
+  cities.push(a);
+  console.log(cities);
 
   root.append(cardEl);
   return cardEl;
@@ -28,17 +36,18 @@ const handleSearchCity = (e) => {
     renderSingle(root, data, createCardEl);
   });
 };
-
 //---------------------
+const render = (elToAddTo, dataListArr, createCard) => {
+  elToAddTo.innerHTML = "";
+  dataListArr?.map((el) => addTo(elToAddTo, createCard(el)));
+};
+render(root, cities, createCardEl);
+
 const addTo = (elToAddTo, elToBeAdded) => elToAddTo.append(elToBeAdded);
 const renderSingle = (elToAddTo, dataObj, createCard) => {
-  elToAddTo.innerHTML = "";
   addTo(elToAddTo, createCard(dataObj));
 };
 
 //----------------------
-callApi(url).then((data) => {
-  renderSingle(root, data, createCardEl);
-});
 
 form.addEventListener("submit", handleSearchCity);
