@@ -8,7 +8,7 @@ const url = `https://api.weatherapi.com/v1/current.json?key=b8a9505712a14179b931
 const createCardEl = (data) => {
   const cardEl = document.createElement("div");
   cardEl.innerHTML = `
-        <div >
+        <div id="card">
  <img src="${data.current.condition.icon}" alt="${data.current.condition.text}">  <div >
     <h5 >${data.location.name}</h5>
         <p>${data.current.condition.text}</p>
