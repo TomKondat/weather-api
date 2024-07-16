@@ -2,11 +2,16 @@ import { getCityWeather } from "./apiServices.js";
 
 const root = document.getElementById("root");
 const form = document.getElementById("search-bar");
+const clearBtn = document.getElementById("clear-btn");
 
 let cities = [];
 
 const createCardEl = (data) => {
   const cardEl = document.createElement("div");
+  const closeSingleBtn = document.createElement("button");
+  closeSingleBtn.innerText = "❌";
+  closeSingleBtn.className = "close-single-btn";
+  closeSingleBtn.addEventListener("click", handleCloseSingle);
   cardEl.innerHTML = `
         <div id="card">
  <img src="${data.current.condition.icon}" alt="${data.current.condition.text}"><div>
@@ -21,12 +26,15 @@ const createCardEl = (data) => {
     condition: data.current.condition.text,
     temp: data.current.temp_c,
   };
-
   cities.push(a);
   console.log(cities);
-
+  cardEl.prepend(closeSingleBtn);
   root.append(cardEl);
   return cardEl;
+};
+
+const handleCloseSingle = (e) => {
+  e.target.parentElement.remove();
 };
 
 const handleSearchCity = (e) => {
@@ -35,6 +43,12 @@ const handleSearchCity = (e) => {
   getCityWeather(city).then((data) => {
     renderSingle(root, data, createCardEl);
   });
+  e.target.children[1].value = "";
+};
+
+const handleClearAll = () => {
+  root.innerHTML = "";
+  cities = [];
 };
 //---------------------
 const render = (elToAddTo, dataListArr, createCard) => {
@@ -51,3 +65,4 @@ const renderSingle = (elToAddTo, dataObj, createCard) => {
 //----------------------
 
 form.addEventListener("submit", handleSearchCity);
+clearBtn.addEventListener("click", handleClearAll);
