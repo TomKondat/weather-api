@@ -8,19 +8,29 @@ let cities = [];
 
 const createCardEl = (data) => {
   const cardEl = document.createElement("div");
+  cardEl.id = "card";
+
   const closeSingleBtn = document.createElement("button");
   closeSingleBtn.innerText = "❌";
   closeSingleBtn.className = "close-single-btn";
   closeSingleBtn.addEventListener("click", handleCloseSingle);
+
+  const btnDiv = document.createElement("div");
+  btnDiv.className = "btn-div";
+  btnDiv.append(closeSingleBtn);
+
   cardEl.innerHTML = `
-        <div id="card">
+  <div class="card-body">
  <img src="${data.current.condition.icon}" alt="${data.current.condition.text}"><div>
     <h5>${data.location.name}, ${data.location.country}</h5>
         <p>${data.current.condition.text}</p>
         <p>${data.current.temp_c}°C</p>
   </div>
 </div>
+</div>
     `;
+  cardEl.prepend(btnDiv);
+
   const a = {
     city: data.location.name,
     condition: data.current.condition.text,
@@ -28,13 +38,12 @@ const createCardEl = (data) => {
   };
   cities.push(a);
   console.log(cities);
-  cardEl.prepend(closeSingleBtn);
   root.append(cardEl);
   return cardEl;
 };
 
 const handleCloseSingle = (e) => {
-  e.target.parentElement.remove();
+  e.target.parentElement.parentElement.remove();
 };
 
 const handleSearchCity = (e) => {

@@ -64,8 +64,7 @@ label {
 }
 
 #root div {
-  margin: 10px;
-  padding: 10px;
+  padding: 5px;
 }
 #card {
   width: 400px;
@@ -74,9 +73,23 @@ label {
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   display: flex;
-  justify-content: center;
-  align-items: center;
+
   flex-direction: column;
   font-size: 20px;
   font-family: Arial, Helvetica, sans-serif;
+}
+.btn-div {
+  display: flex;
+  justify-content: flex-end;
+}
+.close-single-btn {
+  border: none;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.card-body {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 }
